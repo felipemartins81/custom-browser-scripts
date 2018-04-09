@@ -1,5 +1,5 @@
-var deployUrl = '/job/Portal/job/Deploy/job/';
 var portal = '/job/Portal/';
+var deployUrl = portal + 'job/Deploy/job/';
 var frontV1 = portal + 'job/Portal-Frontend/';
 var frontV2 = portal + 'job/MKTP-Front/';
 var frontV3 = portal + 'job/mktp-front-ng/';
