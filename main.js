@@ -1,11 +1,17 @@
 var portal = '/job/Portal/';
-var deployUrl = portal + 'job/Deploy/job/';
 var frontV1 = portal + 'job/Portal-Frontend/';
 var frontV2 = portal + 'job/MKTP-Front/';
 var frontV3 = portal + 'job/mktp-front-ng/';
 var releaseV1 = frontV1 +'job/release/';
 var releaseV2 = frontV2 +'job/release/';
 var releaseV3 = frontV3 +'job/release/';
+var masterV1  = frontV1 +'job/master/';
+var masterV2  = frontV2 +'job/master/';
+var masterV3  = frontV3 +'job/master/';
+var deploys   = portal + 'job/Deploy/';
+var deployUrl      = deploys + 'job/';
+var deployHmlList  = deployUrl + 'Homologa%C3%A7%C3%A3o/';
+var deployProdList = deployUrl + 'Prod/';
 
 // less opacity for non favorites
 switch (window.location.pathname) {
@@ -13,6 +19,9 @@ switch (window.location.pathname) {
   case frontV1:
   case frontV2:
   case frontV3:
+  case deploys:
+  case deployHmlList:
+  case deployProdList:
     jQuery('.icon-fav-inactive').parents('tr').css('opacity','0.2');
     return;
 }
