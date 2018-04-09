@@ -1,4 +1,4 @@
-var deployUrl = 'http://j2.marketplace.back.b2w/job/Portal/job/Deploy/job/';
+var deployUrl = '/job/Portal/job/Deploy/job/';
 var portal = '/job/Portal/';
 var frontV1 = portal + 'job/Portal-Frontend/';
 var frontV2 = portal + 'job/MKTP-Front/';
