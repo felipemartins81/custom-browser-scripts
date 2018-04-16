@@ -1,13 +1,18 @@
 var portal = '/job/Portal/';
-var frontV1 = portal + 'job/Portal-Frontend/';
-var frontV2 = portal + 'job/MKTP-Front/';
-var frontV3 = portal + 'job/mktp-front-ng/';
-var releaseV1 = frontV1 +'job/release/';
-var releaseV2 = frontV2 +'job/release/';
-var releaseV3 = frontV3 +'job/release/';
-var masterV1  = frontV1 +'job/master/';
-var masterV2  = frontV2 +'job/master/';
-var masterV3  = frontV3 +'job/master/';
+var jobV1 = 'job/Portal-Frontend/';
+var jobV2 = 'job/MKTP-Front/';
+var jobV3 = 'job/mktp-front-ng/';
+var jobRelease = 'job/release/';
+var jobMaster = 'job/master/';
+var frontV1 = portal + jobV1;
+var frontV2 = portal + jobV2;
+var frontV3 = portal + jobV3;
+var releaseV1 = frontV1 + jobRelease;
+var releaseV2 = frontV2 + jobRelease;
+var releaseV3 = frontV3 + jobRelease;
+var masterV1  = frontV1 + jobMaster;
+var masterV2  = frontV2 + jobMaster;
+var masterV3  = frontV3 + jobMaster;
 var deploys   = portal + 'job/Deploy/';
 var deployUrl      = deploys + 'job/';
 var deployHmlList  = deployUrl + 'Homologa%C3%A7%C3%A3o/';
@@ -83,11 +88,21 @@ function getUrlQueryParam() {
   }
 }
 
-// init...
+function showJobsVersions() {
+  var style = 'background: #eee; padding: 6px; margin: 0 10px 0 0;';
+  jQuery('[href="'+ jobV1 +'"]').parent().prepend('<span style="'+ style +'">v<b>1</b></span>');
+  jQuery('[href="'+ jobV2 +'"]').parent().prepend('<span style="'+ style +'">v<b>2</b></span>');
+  jQuery('[href="'+ jobV3 +'"]').parent().prepend('<span style="'+ style +'">v<b>3</b></span>');
+}
 
-setGridFavoritesOpacity();
-getUrlQueryParam();
+function init() {
+  setGridFavoritesOpacity();
+  getUrlQueryParam();
+  showJobsVersions();
+  
+  setInterval(function() {
+    makeLinkToDeploy();
+  }, 2000);  
+}
 
-setInterval(function() {
-  makeLinkToDeploy();
-}, 2000);
+init();
