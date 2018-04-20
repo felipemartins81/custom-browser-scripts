@@ -34,50 +34,52 @@ function setGridFavoritesOpacity() {
 }
 
 function makeLinkToDeploy() { 
-  jQuery('#linkToDeploy').remove();
+  setInterval(function() {
+    jQuery('#linkToDeploy').remove();
+      
+    if (jQuery('.progress-bar')[0] !== undefined) { return }
     
-  if (jQuery('.progress-bar')[0] !== undefined) { return }
-  
-  var deployUrl = deploys + 'job/';
-  var lastBuild = '';
-  var server = '';
-  var environment = '';
-  
-  switch (window.location.pathname) {
-    case releaseV1:
-      server = 'Homologa%C3%A7%C3%A3o';
-      environment = 'Frontend';
-      break;
-    case releaseV2:
-      server = 'Homologa%C3%A7%C3%A3o';
-      environment = 'Mktp-Front';
-      break;
-    case releaseV3:
-      server = 'Homologa%C3%A7%C3%A3o';
-      environment = 'mktp-front-ng';
-      break;
-    case masterV1:
-      server = 'Prod';
-      environment = 'Frontend';
-      break;
-    case masterV2:
-      server = 'Prod';
-      environment = 'Mktp-Front';
-      break;
-    case masterV3:
-      server = 'Prod';
-      environment = 'mktp-front-ng';
-      break;
-  }
-  
-  lastBuild = jQuery('.icon-blue').first().parents('.build-icon').next().text();
-  deployUrl += server +'/job/'+ environment +'/build?delay=0sec';
-  
-  if (server === 'Homologa%C3%A7%C3%A3o') {
-    deployUrl += '&tag=' + lastBuild; 
-  }
-  
-  jQuery('#pipeline-box h2').append('<a id="linkToDeploy" href="'+ deployUrl +'" style="margin: 0 0 0 200px;"> '+ iconYellowBall +' Fazer Deploy em '+ (server === 'Prod' ? 'Prod' : 'Homol') +' &raquo; '+ lastBuild +' </a>');
+    var deployUrl = deploys + 'job/';
+    var lastBuild = '';
+    var server = '';
+    var environment = '';
+    
+    switch (window.location.pathname) {
+      case releaseV1:
+        server = 'Homologa%C3%A7%C3%A3o';
+        environment = 'Frontend';
+        break;
+      case releaseV2:
+        server = 'Homologa%C3%A7%C3%A3o';
+        environment = 'Mktp-Front';
+        break;
+      case releaseV3:
+        server = 'Homologa%C3%A7%C3%A3o';
+        environment = 'mktp-front-ng';
+        break;
+      case masterV1:
+        server = 'Prod';
+        environment = 'Frontend';
+        break;
+      case masterV2:
+        server = 'Prod';
+        environment = 'Mktp-Front';
+        break;
+      case masterV3:
+        server = 'Prod';
+        environment = 'mktp-front-ng';
+        break;
+    }
+    
+    lastBuild = jQuery('.icon-blue').first().parents('.build-icon').next().text();
+    deployUrl += server +'/job/'+ environment +'/build?delay=0sec';
+    
+    if (server === 'Homologa%C3%A7%C3%A3o') {
+      deployUrl += '&tag=' + lastBuild; 
+    }
+    
+    jQuery('#pipeline-box h2').append('<a id="linkToDeploy" href="'+ deployUrl +'" style="margin: 0 0 0 200px;"> '+ iconYellowBall +' Fazer Deploy em '+ (server === 'Prod' ? 'Prod' : 'Homol') +' &raquo; '+ lastBuild +' </a>');
+  }, 2000);
 }
 
 function getUrlQueryParam() {
@@ -99,10 +101,7 @@ function init() {
   setGridFavoritesOpacity();
   getUrlQueryParam();
   showJobsVersions();
-  
-  setInterval(function() {
-    makeLinkToDeploy();
-  }, 2000);  
+  makeLinkToDeploy();
 }
 
 init();
