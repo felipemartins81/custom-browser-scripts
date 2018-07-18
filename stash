@@ -1,0 +1,14 @@
+function showRepoName() {
+   setTimeout(function() {
+      var title = document.querySelector('.entity-name').title;
+      var el = document.querySelector('.page-panel-content-header')
+      el.append(' / ' + title);
+   }, 1000);
+ }
+ 
+ 
+function init() {
+   showRepoName();
+}
+ 
+init();
