@@ -15,24 +15,25 @@ container.appendChild(canvas);
 
 let chart = null;
 const ctx = document.getElementById('chart').getContext('2d');
+const dataAmount = 100;
 
 function setChart(list) {
   const chartObj = {
     type: 'bar',
     data: {
-       labels: list.map(e => e.time && e.time.substring(5,16).replace("T"," ")),
+       labels: list.map(e => e.time && e.time.substring(5,16).replace("T"," ")).slice((list.length - dataAmount), list.length),
        datasets: [   
           {
              type: 'line',
              backgroundColor: 'rgba(0, 0, 0, 0.1)',
              borderColor: 'rgba(0, 0, 0, 0.2)',
-             data: list.map(e => myConnectionMbs)
+             data: list.map(e => myConnectionMbs).slice((list.length - dataAmount), list.length)
           },
           {
              type: 'bar',
              backgroundColor: list.map(e => e.speed.split(' ')[0] >= myConnectionMbs ? 'rgba(0, 150, 0, 0.7)' : 'rgba(255, 0, 0, 0.5)'),
              borderColor: 'rgba(0, 0, 0, 1)',
-             data: list.map(e => e.speed.split(' ')[0])
+             data: list.map(e => e.speed.split(' ')[0]).slice((list.length - dataAmount), list.length)
           }
        ]
     },
@@ -82,5 +83,3 @@ function init() {
 setTimeout(function() {
   init();
 }, 500);
-
-      
