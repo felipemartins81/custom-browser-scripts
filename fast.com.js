@@ -31,7 +31,7 @@ function setChart(list) {
           },
           {
              type: 'bar',
-             backgroundColor: list.map(e => e.speed.split(' ')[0] >= myConnectionMbs ? 'rgba(0, 150, 0, 0.7)' : 'rgba(255, 0, 0, 0.5)'),
+             backgroundColor: list.map(e => e.speed.split(' ')[0] >= myConnectionMbs ? 'rgba(0, 150, 0, 0.7)' : 'rgba(255, 0, 0, 0.5)').slice((list.length - dataAmount), list.length),
              borderColor: 'rgba(0, 0, 0, 1)',
              data: list.map(e => e.speed.split(' ')[0]).slice((list.length - dataAmount), list.length)
           }
