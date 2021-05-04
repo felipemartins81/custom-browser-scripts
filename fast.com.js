@@ -31,9 +31,9 @@ function setChart(list) {
           },
           {
              type: 'bar',
-             backgroundColor: list.map(e => e.speed.split(' ')[0] >= myConnectionMbs ? 'rgba(0, 150, 0, 0.7)' : 'rgba(255, 0, 0, 0.5)').slice((list.length - dataAmount), list.length),
+             backgroundColor: list.map(e => getSpeedValue(e) >= myConnectionMbs ? 'rgba(0, 150, 0, 0.7)' : 'rgba(255, 0, 0, 0.5)').slice((list.length - dataAmount), list.length),
              borderColor: 'rgba(0, 0, 0, 1)',
-             data: list.map(e => e.speed.split(' ')[0]).slice((list.length - dataAmount), list.length)
+             data: list.map(e => getSpeedValue(e)).slice((list.length - dataAmount), list.length)
           }
        ]
     },
@@ -50,6 +50,12 @@ function setChart(list) {
   else {
     chart = new Chart(ctx, chartObj);
   }
+}
+
+function getSpeedValue(data) {
+  const units = data.units || data.speed.split(' ')[1];
+  const speedNumber = data.speed.replace(/[^\d.]+/g, '');
+  return units && units == 'Kbps' ? ('0.'+ speedNumber) : speedNumber;
 }
 
 function init() {
@@ -70,7 +76,7 @@ function init() {
   
   setTimeout(function() {
     console.log('setting localStorage');
-    ls.history.push({"speed": speed +' '+ units, "time": d });
+    ls.history.push({"speed": speed, "units": units, "time": d });
     localStorage.setItem(lsName, JSON.stringify(ls));
     setChart(JSON.parse(localStorage[lsName]).history);
   }, min * 1);
