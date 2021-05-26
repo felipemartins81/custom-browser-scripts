@@ -1,6 +1,6 @@
 
 // set your connection speed here
-const myConnectionMbs = 35;
+const myConnectionMbs = 50;
 
 const head = document.getElementsByTagName('head')[0];
 const script1 = document.createElement('script');
@@ -31,7 +31,7 @@ function setChart(list) {
           },
           {
              type: 'bar',
-             backgroundColor: list.map(e => getSpeedValue(e) >= myConnectionMbs ? 'rgba(0, 150, 0, 0.7)' : 'rgba(255, 0, 0, 0.5)').slice((list.length - dataAmount), list.length),
+             backgroundColor: list.map(e => getBarColor(e)).slice((list.length - dataAmount), list.length),
              borderColor: 'rgba(0, 0, 0, 1)',
              data: list.map(e => getSpeedValue(e)).slice((list.length - dataAmount), list.length)
           }
@@ -50,6 +50,16 @@ function setChart(list) {
   else {
     chart = new Chart(ctx, chartObj);
   }
+}
+
+function getBarColor(bar) {
+   if (myConnectionMbs <= getSpeedValue(bar)) {
+      return 'rgba(0, 150, 0, 0.7)'; // green
+   }
+   else if ((1 / (myConnectionMbs / getSpeedValue(bar)) * 100) > 80) {
+      return 'rgba(240, 173, 78, 0.8)'; // yellow
+   }
+   return 'rgba(255, 0, 0, 0.5)'; // red
 }
 
 function getSpeedValue(data) {
