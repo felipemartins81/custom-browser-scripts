@@ -26,7 +26,6 @@ function setChart(list) {
           {
              type: 'line',
              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-             borderColor: 'rgba(0, 0, 0, 0.2)',
              data: list.map(e => myConnectionMbs).slice((list.length - dataAmount), list.length)
           },
           {
@@ -53,13 +52,23 @@ function setChart(list) {
 }
 
 function getBarColor(bar) {
+   const speedPercent = (1 / (myConnectionMbs / getSpeedValue(bar)) * 100);
    if (myConnectionMbs <= getSpeedValue(bar)) {
-      return 'rgba(0, 150, 0, 0.7)'; // green
+      return 'darkgreen';
    }
-   else if ((1 / (myConnectionMbs / getSpeedValue(bar)) * 100) > 80) {
-      return 'rgba(240, 173, 78, 0.8)'; // yellow
+   if (speedPercent > 80) {
+      return 'green';
    }
-   return 'rgba(255, 0, 0, 0.5)'; // red
+   if (speedPercent > 60) {
+      return 'yellowgreen';
+   }
+   if (speedPercent > 40) {
+      return 'orange';
+   }
+   if (speedPercent > 30) {
+      return 'rgba(255, 0, 0, 0.5)';
+   }
+   return 'red';
 }
 
 function getSpeedValue(data) {
