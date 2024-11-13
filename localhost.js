@@ -7,7 +7,7 @@ function setFavicon() {
       else {
          document.querySelector('[type="image/x-icon"]').href = favicon;
       }
-      document.querySelector('title').innerText = 'Local - B2W Marketplace';
+      document.querySelector('title').innerText = 'Local';
    }, 1000);
  }
  

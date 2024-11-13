@@ -1,6 +1,7 @@
 
-// set your connection speed here
-const myConnectionMbs = 50;
+// set your data here
+const myConnectionMbs = 350;
+const updateIntervalInMinutes = 30;
 
 const head = document.getElementsByTagName('head')[0];
 const script1 = document.createElement('script');
@@ -18,14 +19,24 @@ const ctx = document.getElementById('chart').getContext('2d');
 const dataAmount = 100;
 
 function setChart(list) {
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const chartObj = {
     type: 'bar',
     data: {
-       labels: list.map(e => e.time && e.time.substring(5,16).replace("T"," ")).slice((list.length - dataAmount), list.length),
+       labels: list.map(e => {
+          if (!e.time) { return '' }
+          const d = new Date(e.time);
+          const day = d.getDate() < 10 ? ('0'+ d.getDate()) : d.getDate();
+          const mon = d.getMonth();
+          return day +'/'+ monthNames[mon].substr(0,3)
+        })
+        // .map(e => e.time && e.time.substring(5,16).replace("T"," "))
+        .slice((list.length - dataAmount), list.length),
        datasets: [   
           {
              type: 'line',
              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            // borderColor: 'rgba(0, 0, 0, 0.2)',
              data: list.map(e => myConnectionMbs).slice((list.length - dataAmount), list.length)
           },
           {
@@ -37,8 +48,9 @@ function setChart(list) {
        ]
     },
     options: {
-      legend: {
-        display: false
+      legend: { display: false },
+      elements: {
+         point: { pointStyle: 'cross' }
       }
     }
   };
@@ -84,6 +96,8 @@ function init() {
   var d = new Date();
   var lsName = 'mySpeed';
   var ls = localStorage[lsName] ? JSON.parse(localStorage[lsName]) : { "history":[{"speed":"", "time":""}] };
+  
+  document.querySelector('.logo-container').remove();
   setChart(ls.history);
   
   setTimeout(function() {
@@ -102,7 +116,7 @@ function init() {
       
   setTimeout(function() {
     window.location.reload();
-  }, min * 30);
+  }, min * updateIntervalInMinutes);
 }
 
 setTimeout(function() {

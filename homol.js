@@ -7,7 +7,7 @@ function setFavicon() {
       else {
          document.querySelector('[type="image/x-icon"]').href = favicon;
       }
-      document.querySelector('title').innerText = 'Homol - B2W Marketplace';
+      document.querySelector('title').innerText = 'Homol';
    }, 1000);
  }
  
